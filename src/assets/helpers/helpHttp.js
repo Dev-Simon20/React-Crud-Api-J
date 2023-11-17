@@ -1,4 +1,6 @@
-//Los Helpers son fuciones qye se puede reutilizar en varios proyectos
+//Los Helpers son fuciones o codigos  que se puede reutilizar en varios proyectos
+
+//En este caso el helper nos ayudara a realizar las peticiones http
 export const helpHttp = () => {
   const customFetch = (endPoint, options) => {
     const defaultHeader = {
@@ -14,14 +16,14 @@ export const helpHttp = () => {
       : defaultHeader;
 
     options.body = JSON.stringify(options.body) || false;
-    if (options.body) {
+    if (!options.body) {
       delete options.body;
     }
     console.log(options);
     setTimeout(() => controller.abort, 3000);
 
-    return fetch(endPoint, options),
-      then((data) =>
+    return fetch(endPoint, options)
+      .then((data) =>
         data.ok
           ? data.json()
           : Promise.reject({
@@ -29,27 +31,26 @@ export const helpHttp = () => {
               status: data.status || "00",
               statusText: data.statusText || "Ocurrio un error",
             })
-      )
-      .catch((err)=>err)
-    
+      ).catch((err) => err);
   };
 
-
-  const get = (url,options={}) => customFetch(url,options);
-
-  const post = (url,options) => {
-    options.method='POST';
-    return customFetch(url,options)
+  const get = (url, options={}) => {
+    return customFetch(url, options);
   };
 
-  const put = (url,options) => {
-    options.method='PUT';
-    return customFetch(url,options)
+  const post = (url, options) => {
+    options.method = "POST";
+    return customFetch(url, options);
   };
 
-  const del = (url,options) => {
-    options.method='DELETE';
-    return customFetch(url,options)
+  const put = (url, options) => {
+    options.method = "PUT";
+    return customFetch(url, options);
+  };
+
+  const del = (url, options) => {
+    options.method = "DELETE";
+    return customFetch(url, options);
   };
 
   return {
