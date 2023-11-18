@@ -2,6 +2,8 @@ import React, { useState,useEffect } from "react";
 import CrudForm from "./CrudForm";
 import CrudTabtle from "./CrudTable";
 import { helpHttp } from "../helpers/helpHttp";
+import Loader from "./Loader/Loader";
+import Message from "./Message";
 
 // Ejemplo de useState
 // const [constante, AgregaValorAlaConmstante]=useState(valor inicial de la constante);
@@ -9,11 +11,14 @@ import { helpHttp } from "../helpers/helpHttp";
 
 
 const CrudApi=()=>{
-    const [db,setDb]=useState([]);
+    const [db,setDb]=useState(null);
     const[dataToEdit,setDataToEdit]=useState(null);
+    const [err,setError]=useState(null);
+    const [loading,setLoading]=useState(false);
     let api=helpHttp();
     let url='http://localhost:5000/santos';
     useEffect(()=>{
+       setLoading(true)
        api.get(url)
        .then((data)=>{
         //console.log('Informacion ',data);
@@ -21,7 +26,9 @@ const CrudApi=()=>{
             setDb(data)
         }else{
             setDb(null)
+            setError(data)
         }
+        setLoading(false)
        });
     },[])
 
@@ -51,18 +58,21 @@ const CrudApi=()=>{
     return(
         <>
         <h2>Crud API</h2>
+        
         <CrudForm 
         createData={createData} 
         updateData={updateData} 
         dataToEdit={dataToEdit}
         setDataToEdit={setDataToEdit}
         />
-
-        <CrudTabtle 
+        {loading&&<Loader></Loader>}
+        {err&&<Message msg={`Error ${err.status}:  ${err.statusText} `} bgColor='#dc3545'></Message>}
+        {db&&(<CrudTabtle 
         data={db} 
         setDataToEdit={setDataToEdit}
         deleteData={deleteData}>       
-        </CrudTabtle>
+        </CrudTabtle>)}
+ 
         </>
     )
 
