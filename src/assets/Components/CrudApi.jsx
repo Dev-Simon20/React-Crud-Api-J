@@ -36,8 +36,24 @@ const CrudApi=()=>{
 
     const createData=(data)=>{
         data.id=Date.now();
-        setDb((db)=>[...db,data])
+        // setDb((db)=>[...db,data])
+
+        let opt={body:data,
+                 headers:{'content-type':'application/json'}
+        }
+        
+        api.post(url,opt).then((res)=>{
+            console.log('El contenido de res es :',res);
+            if(!res.err){
+                // setDb([...db,res])
+            }else{
+                setError(res)
+            }
+        })
     }
+
+
+
     const updateData=(data)=>{ 
          let newDb=db.map((inf)=>{
             if(inf.id==data.id){

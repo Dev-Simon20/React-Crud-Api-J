@@ -40,7 +40,6 @@ const CrudForm=({createData,updateData,setDataToEdit,dataToEdit})=>{
         // }
         
         //La forma de Jhon Mircha
-        console.log(e.target);
         setForm({
             ...form,
             [e.target.name]:e.target.value
