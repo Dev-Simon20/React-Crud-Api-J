@@ -10,7 +10,8 @@ const SongSearch=()=>{
     const [lyric,setLyric]=useState(null)
 
     const dataSend=(data)=>{
-           console.log(data);
+        //console.log('datos recibidos:   ',data);
+           setSearch(data)
     }
 
     return(<>
