@@ -72,7 +72,6 @@ const CrudApi = () => {
         setError(res)
       }
     });
-
   };
   return (
     <>
