@@ -6,7 +6,20 @@ const initialForm = {
   subject: "",
   comments: "",
 };
-const validations = () => {};
+const validations = (form) => {
+  const {name,email,subject,comments}=form;
+  let errors={};
+  if (!name.trim()) {
+      errors.name="El campo nombre es requerido"
+  }
+
+  return errors;
+};
+
+let styles={
+    fontWeight:'bold',
+    color:'#dc3545'
+}
 
 const ContactForm = () => {
   const {
@@ -31,6 +44,7 @@ const ContactForm = () => {
           onBlur={handleBlur}
           value={form.name}
         />
+        {error.name&&<p style={styles}>{error.name}</p>}
         <input
           type="email"
           name="email"
@@ -39,6 +53,7 @@ const ContactForm = () => {
           onBlur={handleBlur}
           value={form.email}
         />
+        {error.email&&<p style={styles}>{error.email}</p>}
         <input
           type="text"
           name="subject"
@@ -47,15 +62,17 @@ const ContactForm = () => {
           onBlur={handleBlur}
           value={form.subject}
         />
+        {error.subject&&<p style={styles}>{error.subject}</p>}
         <textarea
           name="comments"
           cols="50"
-          rows="5"
+          rows="2"
           placeholder="Escribe tus comnetarios"
           onChange={handleChange}
           onBlur={handleBlur}
           value={form.comments }
         ></textarea>
+        {error.comments&&<p style={styles}>{error.comments}</p>}
 
         <input type="submit" value="Enviar" />
       </form>

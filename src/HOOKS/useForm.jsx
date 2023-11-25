@@ -7,18 +7,21 @@ export const useForm=(initialForm,validateForm)=>{
   const [response,setResponse]=useState(null)
 
   const handleChange=(e)=>{
+    // Destructuramos la props de e (name, value)
+    const {name,value}=e.target;
     setForm({
       ...form,
-      [e.target.name]:[e.target.value]
+      [name]:value
     })
   }
   const handleBlur=(e)=>{
   //  Este evento se desencadenara y validara el input cuando se deje de seleccionar
   //Esto es para validar antes de que se envie la informacion a traves del handle Submit
+     handleChange(e);
+     setError(validateForm(form))
   }
   const handleSubmit=(e)=>{
     e.preventDefault();
-    console.log(form);
     setForm(initialForm)
   }
 
