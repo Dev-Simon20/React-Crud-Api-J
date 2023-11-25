@@ -1,4 +1,5 @@
 import { useForm } from "../../HOOKS/useForm";
+import Loader from "./Loader/Loader";
 
 const initialForm = {
   name: "",
@@ -94,9 +95,9 @@ const ContactForm = () => {
           value={form.comments}
         ></textarea>
         {error.comments && <p style={styles}>{error.comments}</p>}
-
         <input type="submit" value="Enviar" />
       </form>
+      {loading&& <Loader></Loader>}
     </>
   );
 };
